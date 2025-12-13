@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian University Library Federation - A2A Demo</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Indian University Library Federation</h1>
+            <p class="subtitle">AI-Powered A2A Protocol Demo - Watch How Federated Search Works!</p>
+        </header>
+
+        <!-- Flow Explanation Banner -->
+        <div class="flow-banner">
+            <div class="flow-step-indicator">
+                <span class="step-num" id="current-step">0</span>
+                <span class="step-label" id="current-step-label">Ready to search</span>
+            </div>
+        </div>
+
+        <!-- Architecture Visualization -->
+        <div class="architecture">
+            <!-- IIT Delhi Node -->
+            <div class="library-node" id="iit-delhi-node">
+                <div class="node-step-badge" id="delhi-step-badge">3</div>
+                <div class="node-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 3L1 9l11 6l9-4.91V17h2V9L12 3z"/>
+                        <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+                    </svg>
+                </div>
+                <div class="node-name">IIT Delhi</div>
+                <div class="node-status" id="iit-delhi-status">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Checking...</span>
+                </div>
+                <div class="node-info">Engineering, Electronics, Physics</div>
+                <div class="node-action" id="delhi-action"></div>
+            </div>
+
+            <!-- Connection Lines & Portal -->
+            <div class="connections">
+                <!-- Left connection (Delhi) -->
+                <div class="connection-container left">
+                    <div class="connection-line" id="line-delhi"></div>
+                    <div class="data-packet" id="packet-delhi-out">
+                        <span>📤</span>
+                    </div>
+                    <div class="data-packet return" id="packet-delhi-in">
+                        <span>📥</span>
+                    </div>
+                </div>
+
+                <!-- Central Portal -->
+                <div class="portal-container">
+                    <div class="portal-step-badge" id="portal-step-badge">2</div>
+                    <div class="portal-node" id="portal-node">
+                        <div class="portal-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                            </svg>
+                        </div>
+                        <div class="portal-name">Central Portal</div>
+                    </div>
+                    <div class="portal-action" id="portal-action"></div>
+                </div>
+
+                <!-- Right connection (Bombay) -->
+                <div class="connection-container right">
+                    <div class="connection-line" id="line-bombay"></div>
+                    <div class="data-packet" id="packet-bombay-out">
+                        <span>📤</span>
+                    </div>
+                    <div class="data-packet return" id="packet-bombay-in">
+                        <span>📥</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IIT Bombay Node -->
+            <div class="library-node" id="iit-bombay-node">
+                <div class="node-step-badge" id="bombay-step-badge">3</div>
+                <div class="node-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 3L1 9l11 6l9-4.91V17h2V9L12 3z"/>
+                        <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+                    </svg>
+                </div>
+                <div class="node-name">IIT Bombay</div>
+                <div class="node-status" id="iit-bombay-status">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Checking...</span>
+                </div>
+                <div class="node-info">CS, AI/ML, Quantum Computing</div>
+                <div class="node-action" id="bombay-action"></div>
+            </div>
+        </div>
+
+        <!-- User Node (below) -->
+        <div class="user-section">
+            <div class="user-connection">
+                <div class="connection-line vertical" id="line-user"></div>
+                <div class="data-packet vertical" id="packet-user-out">
+                    <span>🔍</span>
+                </div>
+                <div class="data-packet vertical return" id="packet-user-in">
+                    <span>📚</span>
+                </div>
+            </div>
+            <div class="user-node" id="user-node">
+                <div class="user-step-badge" id="user-step-badge">1</div>
+                <div class="user-icon">👤</div>
+                <div class="user-label">You (User)</div>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Ask naturally: 'Find books about AI' or 'What do you have on algorithms?'">
+                <button id="search-btn" onclick="performSearch()">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                    Search All Libraries
+                </button>
+            </div>
+            <div class="quick-searches">
+                <span>Try:</span>
+                <button class="quick-btn" onclick="quickSearch('Find me books about deep learning')">Deep Learning</button>
+                <button class="quick-btn" onclick="quickSearch('What books do you have on algorithms?')">Algorithms</button>
+                <button class="quick-btn" onclick="quickSearch('Can you recommend electronics books?')">Electronics</button>
+                <button class="quick-btn" onclick="quickSearch('I want to learn about neural networks')">Neural Networks</button>
+            </div>
+        </div>
+
+        <!-- Flow Log Panel -->
+        <div class="flow-log-panel" id="flow-log-panel">
+            <div class="flow-log-header">
+                <h3>🤖 AI-Powered A2A Flow Log</h3>
+                <button class="clear-log-btn" onclick="clearFlowLog()">Clear</button>
+            </div>
+            <div class="flow-log" id="flow-log">
+                <div class="log-entry info">
+                    <span class="log-time">--:--:--</span>
+                    <span class="log-msg">Enter a search query to see AI-powered A2A flow in action!</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="results-section">
+            <div class="results-header">
+                <h2>Search Results</h2>
+                <span class="results-count" id="results-count"></span>
+            </div>
+
+            <div class="results-grid">
+                <!-- IIT Delhi Results -->
+                <div class="library-results" id="delhi-results">
+                    <div class="library-results-header">
+                        <span class="library-badge delhi">IIT Delhi</span>
+                        <span class="book-count" id="delhi-count"></span>
+                    </div>
+                    <div class="books-list" id="delhi-books"></div>
+                </div>
+
+                <!-- IIT Bombay Results -->
+                <div class="library-results" id="bombay-results">
+                    <div class="library-results-header">
+                        <span class="library-badge bombay">IIT Bombay</span>
+                        <span class="book-count" id="bombay-count"></span>
+                    </div>
+                    <div class="books-list" id="bombay-books"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by <strong>A2A Protocol</strong> |
+               <a href="/.well-known/agent.json" target="_blank">Agent Card</a> |
+               <a href="/libraries" target="_blank">Connected Libraries</a> |
+               <a href="/docs" target="_blank">API Docs</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

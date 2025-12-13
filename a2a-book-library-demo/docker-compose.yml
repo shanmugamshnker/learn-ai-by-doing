@@ -1,0 +1,76 @@
+# A2A Federated Library System - Docker Compose
+# ==============================================
+# Run: docker-compose up --build
+#
+# Indian University Libraries Federation:
+#   - IIT Delhi Library (Port 8003)
+#   - IIT Bombay Library (Port 8004)
+#   - Central Portal (Port 8000)
+
+services:
+  # ============================================
+  # IIT Delhi Library Agent - Strands Agents
+  # ============================================
+  iit-delhi-library:
+    build:
+      context: .
+      args:
+        AGENT: iit_delhi_library_agent
+    container_name: iit-delhi-library-agent
+    ports:
+      - "8003:8003"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+    networks:
+      - a2a-network
+    restart: unless-stopped
+
+  # ============================================
+  # IIT Bombay Library Agent - Strands Agents
+  # ============================================
+  iit-bombay-library:
+    build:
+      context: .
+      args:
+        AGENT: iit_bombay_library_agent
+    container_name: iit-bombay-library-agent
+    ports:
+      - "8004:8004"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+    networks:
+      - a2a-network
+    restart: unless-stopped
+
+  # ============================================
+  # Central Library Portal - OpenAI SDK
+  # ============================================
+  central-portal:
+    build:
+      context: .
+      args:
+        AGENT: central_portal_agent
+    container_name: central-portal-agent
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+      # Docker networking - use service names instead of localhost
+      - IIT_DELHI_LIBRARY_URL=http://iit-delhi-library:8003
+      - IIT_BOMBAY_LIBRARY_URL=http://iit-bombay-library:8004
+    depends_on:
+      - iit-delhi-library
+      - iit-bombay-library
+    networks:
+      - a2a-network
+    restart: unless-stopped
+
+networks:
+  a2a-network:
+    driver: bridge
