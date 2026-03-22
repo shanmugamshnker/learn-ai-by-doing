@@ -1,0 +1,17 @@
+[project]
+name = "tool-calling-deep-dive"
+version = "0.1.0"
+description = "Learn LLM tool calling — a hands-on deep dive"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "openai>=1.12.0",
+    "python-dotenv>=1.0.0",
+    "psycopg2-binary>=2.9.0",
+    "ddgs>=7.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.7",
+]

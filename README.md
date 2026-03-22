@@ -28,6 +28,34 @@ uv run query_foods.py
 
 ---
 
+### 2. [Tool Calling Deep Dive](./tool-calling-deep-dive)
+Learn LLM tool calling — from "why it exists" to querying a real database.
+
+**What you'll learn:**
+- Why LLMs need tools (and what happens without them)
+- The exact request/response protocol behind tool calling
+- Structured output — the bridge between LLM and code
+- Multiple tools, tool chaining, and web search
+- Connecting tools to a real PostgreSQL database
+
+**Features:**
+- 6 progressive exercises (run them in order)
+- Real PostgreSQL database with product catalog
+- Web search tool (DuckDuckGo, no API key needed)
+- Interactive menus — try your own questions
+
+**Quick start:**
+```bash
+cd tool-calling-deep-dive
+cp .env.example .env     # Add your Groq API key
+uv sync
+docker compose up -d
+uv run python seed.py
+uv run python 01_without_tools.py
+```
+
+---
+
 ## 🚀 Getting Started
 
 Each topic is self-contained with its own README, dependencies, and examples.

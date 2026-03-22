@@ -125,9 +125,3 @@ MIT License - Feel free to use this for learning!
 - Nutrition dataset from Kaggle
 - ChromaDB team for the excellent vector database
 - Sentence Transformers for the embedding model
-
----
-
-**Happy Learning!**
-
-If you found this helpful, give it a star on GitHub!
